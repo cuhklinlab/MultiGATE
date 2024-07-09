@@ -11,5 +11,5 @@ In addition to reconstruction loss, CLIP loss is employed to enhance embedding m
 
 ## Usage && installation
 
-Please follow the [Tutorials](https://multigate.readthedocs.io/en/latest/index.html) for installation and Usage.
+Please follow the [Tutorials](https://multigate.readthedocs.io/en/latest) for installation and Usage.
 
