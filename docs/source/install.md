@@ -12,6 +12,7 @@ pip install rpy2
 pip install MultiGATE
 ```
 
+> Installing MultiGATE in a pre-configured bioinformatics Conda environment via pip install MultiGATE should only take about one minute under normal circumstances.
 > If you can install MultiGATE following the above command you can just goto other tutorials to learn more about MultiGATE and skip the following detailed instructions for installation.
 
 ## Detailed instructions
