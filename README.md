@@ -2,7 +2,7 @@
 
 > MultiGATE is a novel method that utilizes a two-level graph attention auto-encoder to integrate multi-modality and spatial information effectively.
 
-![Overview](./fig/overview.jpg)
+![Overview](./fig/MultiGATE_framework.jpg)
 
 MultiGATE is a two-level graph attention auto-encoder designed for spatial multi-omics analysis. 
 It integrates chromatin accessibility or protein information with gene expression data using an attention mechanism. 
