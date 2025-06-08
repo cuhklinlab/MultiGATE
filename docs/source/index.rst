@@ -1,6 +1,12 @@
 Welcome to MultiGATE's documentation!
 ===================================
 
+
+.. figure:: ../../fig/MultiGATE_framework.png
+   :align: center
+   :width: 100%
+   :alt: MultiGATE Workflow
+
 **MultiGATE** is a novel method that utilzes a two-level graph attention auto-encoder
 to integrate multi-modality and spatial information effectively.
 
@@ -26,7 +32,6 @@ MultiGATE Tutorials
    :maxdepth: 2
    
    notebooks/human
-   notebooks/slide_tags
    notebooks/spleen
    notebooks/p22
 
