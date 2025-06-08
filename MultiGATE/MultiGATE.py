@@ -9,15 +9,20 @@ class MultiGATE():
 
     def __init__(self, hidden_dims1, hidden_dims2, spot_num, temp, n_epochs=500, lr=0.0001,
                  gradient_clipping=5, nonlinear=True, weight_decay=0.0001,
-                 verbose=False, random_seed=2020):
+                 verbose=False, random_seed=2020, config=None):
         np.random.seed(random_seed)
         tf.set_random_seed(random_seed)
+        self.loss_list_rna = []
+        self.loss_list_atac = []
         self.loss_list = []
+        self.loss_list_clip = []
+        self.weight_decay_loss_list = []
         self.lr = lr
         self.n_epochs = n_epochs
         self.gradient_clipping = gradient_clipping
         self.build_placeholders()
         self.verbose = verbose
+        self.config = config
         
         self.temp = temp
         self.mgate = MGATE(hidden_dims1, hidden_dims2, spot_num, temp, nonlinear, weight_decay)
@@ -35,8 +40,18 @@ class MultiGATE():
         self.X2 = tf.placeholder(dtype=tf.float32)
 
     def build_session(self, gpu=True):
-        config = tf.ConfigProto()
-        config.gpu_options.allow_growth = True
+        if self.config is not None:
+            # Use the provided configuration
+            config = self.config
+        else:
+            # Use default configuration
+            config = tf.ConfigProto()
+            config.gpu_options.allow_growth = True
+            # Add A100 compatibility options
+            config.gpu_options.per_process_gpu_memory_fraction = 0.7
+            config.graph_options.rewrite_options.memory_optimization = True
+            config.graph_options.rewrite_options.arithmetic_optimization = True
+            
         if gpu == False:
             config.intra_op_parallelism_threads = 0
             config.inter_op_parallelism_threads = 0
@@ -61,22 +76,39 @@ class MultiGATE():
                     tqdm.write(f"Epoch: {epoch}, Loss: {loss:.4f}")
                     
     def run_epoch(self, epoch, A, prune_A, GP, X1, X2):
-
-        loss, loss_rna, loss_atac, weight_decay_loss, clip_loss, _ = self.session.run([self.loss, self.loss_rna, self.loss_atac, self.weight_decay_loss, self.clip_loss, self.train_op],
-                                         feed_dict={self.A: A,
-                                                    self.prune_A: prune_A,
-                                                    self.GP: GP,
-                                                    self.X1: X1,
-                                                    self.X2: X2})
-        self.loss_list.append(loss)
-        #if self.verbose:
-        #    print("Epoch: %s, Loss: %.4f" % (epoch, loss))
-        # print("Epoch: %s, Loss: %.4f" % (epoch, loss))
-        # print("Epoch: %s, Loss_rna: %.4f" % (epoch, loss_rna))
-        # print("Epoch: %s, Loss_atac: %.4f" % (epoch, loss_atac))
-        # print("Epoch: %s, Loss_weight_decay: %.4f" % (epoch, weight_decay_loss))
-        # print("Epoch: %s, Loss_clip: %.4f" % (epoch, clip_loss))
-        return loss
+        try:
+            loss, loss_rna, loss_atac, weight_decay_loss, clip_loss, _ = self.session.run([self.loss, self.loss_rna, self.loss_atac, self.weight_decay_loss, self.clip_loss, self.train_op],
+                                             feed_dict={self.A: A,
+                                                        self.prune_A: prune_A,
+                                                        self.GP: GP,
+                                                        self.X1: X1,
+                                                        self.X2: X2})
+            self.loss_list.append(loss)
+            self.loss_list_atac.append(loss_atac)
+            self.loss_list_rna.append(loss_rna)
+            self.loss_list_clip.append(clip_loss)
+            self.weight_decay_loss_list.append(weight_decay_loss)
+            return loss
+        except tf.errors.InternalError as e:
+            if "Blas GEMM launch failed" in str(e):
+                print("BLAS GEMM operation failed. Attempting with smaller batch or reduced precision...")
+                # Try to continue with a gentler operation approach
+                with tf.device('/cpu:0'):  # Fall back to CPU if GEMM fails on GPU
+                    loss, loss_rna, loss_atac, weight_decay_loss, clip_loss, _ = self.session.run([self.loss, self.loss_rna, self.loss_atac, self.weight_decay_loss, self.clip_loss, self.train_op],
+                                                 feed_dict={self.A: A,
+                                                            self.prune_A: prune_A,
+                                                            self.GP: GP,
+                                                            self.X1: X1,
+                                                            self.X2: X2})
+                    self.loss_list.append(loss)
+                    self.loss_list_atac.append(loss_atac)
+                    self.loss_list_rna.append(loss_rna)
+                    self.loss_list_clip.append(clip_loss)
+                    self.weight_decay_loss_list.append(weight_decay_loss)
+                    return loss
+            else:
+                # If it's not a BLAS error, re-raise
+                raise
 
     def infer(self, A, prune_A, GP, X1, X2):
         H1, H2, C1, C2, Cgp, ReX1, ReX2 = self.session.run([self.H1, self.H2, self.C1, self.C2, self.Cgp, self.ReX1, self.ReX2],

@@ -115,6 +115,9 @@ class MGATE():
         dim_ratio = tf.cast(tf.sqrt(tf.shape(X2)[1]/tf.shape(X1)[1]), dtype=tf.float32) #tf.sqrt()
         features_loss1 = tf.sqrt(tf.reduce_sum(tf.reduce_sum(tf.pow(X1 - X1_, 2))))
         features_loss2 = tf.sqrt(tf.reduce_sum(tf.reduce_sum(tf.pow(X2 - X2_, 2))))
+        # features_loss1 = tf.sqrt(tf.reduce_mean(tf.reduce_mean(tf.pow(X1 - X1_, 2))))
+        # features_loss2 = tf.sqrt(tf.reduce_mean(tf.reduce_mean(tf.pow(X2 - X2_, 2))))
+        
 
         # for layer in range(self.n_layers):
         #     weight_decay_loss = 0
@@ -143,8 +146,9 @@ class MGATE():
         # # The reconstruction loss of node features
         # features_loss = tf.sqrt(tf.reduce_sum(tf.reduce_sum(tf.pow(X - X_, 2))))
         #
+        weight_decay_loss = 0
         for layer in range(self.n_layers):
-            weight_decay_loss = 0
+            
             weight_decay_loss += tf.multiply(tf.nn.l2_loss(self.W1[layer]), self.weight_decay, name='weight_loss')
             weight_decay_loss += tf.multiply(tf.nn.l2_loss(self.W2[layer]), self.weight_decay, name='weight_loss')
         weight_decay_loss += tf.multiply(tf.nn.l2_loss(W_i), self.weight_decay, name='weight_loss')
@@ -152,7 +156,9 @@ class MGATE():
 
         #
         # # Total loss
-
+        # features_loss1*10
+        # features_loss1=features_loss1*10
+        # features_loss2=features_loss2*10
         self.loss = features_loss1   + features_loss2 + weight_decay_loss + clip_loss # *0.0
         self.loss_rna = features_loss1
         self.loss_atac = features_loss2

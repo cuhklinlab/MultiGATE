@@ -11,142 +11,142 @@ import re
 from networkx.algorithms.bipartite import biadjacency_matrix   
 import MultiGATE.genomics as genomics
 
-# def calculate_weight(rna_ratio, atac_ratio):
-#     try:
-#         with np.errstate(divide='raise', invalid='raise'):
-#             rna_exp = np.exp(rna_ratio)
-#             atac_exp = np.exp(atac_ratio)
-#             rna_weight = rna_exp / (rna_exp + atac_exp)
-#     except (ZeroDivisionError, FloatingPointError, RuntimeError):
-#         rna_weight = np.where(np.isinf(rna_exp), 1.0, 0.0)
-#     return rna_weight
-# def get_lowest_jaccard_indices(jaccard_sim, embedding, n_neighbors=15):
-#     num_obs = jaccard_sim.shape[0]
-#     lowest_indices = []
+def calculate_weight(rna_ratio, atac_ratio):
+    try:
+        with np.errstate(divide='raise', invalid='raise'):
+            rna_exp = np.exp(rna_ratio)
+            atac_exp = np.exp(atac_ratio)
+            rna_weight = rna_exp / (rna_exp + atac_exp)
+    except (ZeroDivisionError, FloatingPointError, RuntimeError):
+        rna_weight = np.where(np.isinf(rna_exp), 1.0, 0.0)
+    return rna_weight
+def get_lowest_jaccard_indices(jaccard_sim, embedding, n_neighbors=15):
+    num_obs = jaccard_sim.shape[0]
+    lowest_indices = []
 
-#     for i in range(num_obs):
-#         row = jaccard_sim[i]
-#         nonzero_indices = np.nonzero(row)[0]
+    for i in range(num_obs):
+        row = jaccard_sim[i]
+        nonzero_indices = np.nonzero(row)[0]
 
-#         if len(nonzero_indices) > n_neighbors:
-#             rna_diff = embedding[i] - embedding[nonzero_indices]
-#             norms = np.linalg.norm(rna_diff, axis=1)
-#             sort_indices = np.lexsort((norms, row[nonzero_indices]))  # Sort by norms, then row values
-#             lowest_indices.append(nonzero_indices[sort_indices[:n_neighbors]])
-#         else:
-#             lowest_indices.append(nonzero_indices)
+        if len(nonzero_indices) > n_neighbors:
+            rna_diff = embedding[i] - embedding[nonzero_indices]
+            norms = np.linalg.norm(rna_diff, axis=1)
+            sort_indices = np.lexsort((norms, row[nonzero_indices]))  # Sort by norms, then row values
+            lowest_indices.append(nonzero_indices[sort_indices[:n_neighbors]])
+        else:
+            lowest_indices.append(nonzero_indices)
 
-#     return lowest_indices
-# def calculate_kernel_bandwidth(embedding, lowest_jaccard_indices):
-#     num_obs = embedding.shape[0]
-#     euclidean_distances = pairwise_distances(embedding)
-#     kernel_bandwidths = []
-#     for i in range(num_obs):
-#         indices = lowest_jaccard_indices[i]
-#         avg_distance = np.mean(euclidean_distances[i, indices])
-#         kernel_bandwidths.append(avg_distance)
-#     return kernel_bandwidths
-# def run_wnn_analysis(rna, atac, n_neighbors = 15):
-#     rna_embedding = rna.obsm['STAGATE']  # Replace 'X_emb' with the actual embedding key in your RNA object
-#     atac_embedding = atac.obsm['STAGATE']
-#     rna_embedding = normalize(rna_embedding, norm='l2')  # Replace 'X_emb' with the actual embedding key in your RNA object
-#     atac_embedding = normalize(atac_embedding, norm='l2')
-#     # rna_avg_embedding = rna_neighbors.dot(rna_embedding) / rna_neighbors.sum(axis=1)
-#     nn = NearestNeighbors(n_neighbors=n_neighbors+1, algorithm='auto')
-#     nn.fit(rna_embedding)
-#     # Find the 15 nearest neighbors for each observation
-#     _, indices = nn.kneighbors(rna_embedding, n_neighbors=n_neighbors+1)
-#     # Exclude the observation itself from the neighbors
-#     neighbors_indices = indices[:, 1:]
-#     # Calculate the average RNA embedding using the neighbor indices
-#     rna_avg_embedding = np.mean(rna_embedding[neighbors_indices], axis=1)
-#     atac_cross_modality_avg_embedding = np.mean(atac_embedding[neighbors_indices], axis=1)
-#     n_observations = len(rna_embedding)
-#     rna_neighbors = sp.lil_matrix((n_observations, n_observations), dtype=int)
+    return lowest_indices
+def calculate_kernel_bandwidth(embedding, lowest_jaccard_indices):
+    num_obs = embedding.shape[0]
+    euclidean_distances = pairwise_distances(embedding)
+    kernel_bandwidths = []
+    for i in range(num_obs):
+        indices = lowest_jaccard_indices[i]
+        avg_distance = np.mean(euclidean_distances[i, indices])
+        kernel_bandwidths.append(avg_distance)
+    return kernel_bandwidths
+def run_wnn_analysis(rna, atac, n_neighbors = 15):
+    rna_embedding = rna.obsm['STAGATE']  # Replace 'X_emb' with the actual embedding key in your RNA object
+    atac_embedding = atac.obsm['STAGATE']
+    rna_embedding = normalize(rna_embedding, norm='l2')  # Replace 'X_emb' with the actual embedding key in your RNA object
+    atac_embedding = normalize(atac_embedding, norm='l2')
+    # rna_avg_embedding = rna_neighbors.dot(rna_embedding) / rna_neighbors.sum(axis=1)
+    nn = NearestNeighbors(n_neighbors=n_neighbors+1, algorithm='auto')
+    nn.fit(rna_embedding)
+    # Find the 15 nearest neighbors for each observation
+    _, indices = nn.kneighbors(rna_embedding, n_neighbors=n_neighbors+1)
+    # Exclude the observation itself from the neighbors
+    neighbors_indices = indices[:, 1:]
+    # Calculate the average RNA embedding using the neighbor indices
+    rna_avg_embedding = np.mean(rna_embedding[neighbors_indices], axis=1)
+    atac_cross_modality_avg_embedding = np.mean(atac_embedding[neighbors_indices], axis=1)
+    n_observations = len(rna_embedding)
+    rna_neighbors = sp.lil_matrix((n_observations, n_observations), dtype=int)
 
-#     # Set the entries in the neighbor matrix to 1 for the neighbors
-#     for i, neighbors in enumerate(neighbors_indices):
-#         rna_neighbors[i, neighbors] = 1
+    # Set the entries in the neighbor matrix to 1 for the neighbors
+    for i, neighbors in enumerate(neighbors_indices):
+        rna_neighbors[i, neighbors] = 1
 
-#     _, indices = nn.kneighbors(atac_embedding, n_neighbors=n_neighbors+1)
-#     neighbors_indices = indices[:, 1:]
-#     atac_avg_embedding = np.mean(atac_embedding[neighbors_indices], axis=1)
-#     rna_cross_modality_avg_embedding  = np.mean(rna_embedding[neighbors_indices], axis=1)
-#     # Calculate cross-modality average embeddings
-#     n_observations = len(rna_embedding)
-#     atac_neighbors = sp.lil_matrix((n_observations, n_observations), dtype=int)
+    _, indices = nn.kneighbors(atac_embedding, n_neighbors=n_neighbors+1)
+    neighbors_indices = indices[:, 1:]
+    atac_avg_embedding = np.mean(atac_embedding[neighbors_indices], axis=1)
+    rna_cross_modality_avg_embedding  = np.mean(rna_embedding[neighbors_indices], axis=1)
+    # Calculate cross-modality average embeddings
+    n_observations = len(rna_embedding)
+    atac_neighbors = sp.lil_matrix((n_observations, n_observations), dtype=int)
 
-#     # Set the entries in the neighbor matrix to 1 for the neighbors
-#     for i, neighbors in enumerate(neighbors_indices):
-#         atac_neighbors[i, neighbors] = 1
+    # Set the entries in the neighbor matrix to 1 for the neighbors
+    for i, neighbors in enumerate(neighbors_indices):
+        atac_neighbors[i, neighbors] = 1
 
-#     # Assuming rna_neighbors is a sparse matrix
-#     rna_jaccard_sim = pairwise_distances(rna_neighbors.toarray(), metric='jaccard')
+    # Assuming rna_neighbors is a sparse matrix
+    rna_jaccard_sim = pairwise_distances(rna_neighbors.toarray(), metric='jaccard')
 
-#     # Calculate the Jaccard similarity matrix for ATAC
-#     atac_jaccard_sim = pairwise_distances(atac_neighbors.toarray(), metric='jaccard')
-#     # Get the indices of the 15 observations with the lowest non-zero Jaccard similarity for RNA
-#     rna_lowest_jaccard_indices = get_lowest_jaccard_indices(rna_avg_embedding,rna_jaccard_sim,n_neighbors=n_neighbors)
+    # Calculate the Jaccard similarity matrix for ATAC
+    atac_jaccard_sim = pairwise_distances(atac_neighbors.toarray(), metric='jaccard')
+    # Get the indices of the 15 observations with the lowest non-zero Jaccard similarity for RNA
+    rna_lowest_jaccard_indices = get_lowest_jaccard_indices(rna_avg_embedding,rna_jaccard_sim,n_neighbors=n_neighbors)
 
-#     # Get the indices of the 15 observations with the lowest non-zero Jaccard similarity for ATAC
-#     atac_lowest_jaccard_indices = get_lowest_jaccard_indices(atac_avg_embedding,atac_jaccard_sim,n_neighbors=n_neighbors)
-#     # Calculate the observation-specific kernel bandwidths for RNA
-#     rna_kernel_bandwidths = calculate_kernel_bandwidth(rna_embedding, rna_lowest_jaccard_indices)
-#     # Calculate the observation-specific kernel bandwidths for ATAC
-#     atac_kernel_bandwidths = calculate_kernel_bandwidth(atac_embedding, atac_lowest_jaccard_indices)
+    # Get the indices of the 15 observations with the lowest non-zero Jaccard similarity for ATAC
+    atac_lowest_jaccard_indices = get_lowest_jaccard_indices(atac_avg_embedding,atac_jaccard_sim,n_neighbors=n_neighbors)
+    # Calculate the observation-specific kernel bandwidths for RNA
+    rna_kernel_bandwidths = calculate_kernel_bandwidth(rna_embedding, rna_lowest_jaccard_indices)
+    # Calculate the observation-specific kernel bandwidths for ATAC
+    atac_kernel_bandwidths = calculate_kernel_bandwidth(atac_embedding, atac_lowest_jaccard_indices)
 
-#     # Assign the observation-specific kernel bandwidths to the respective AnnData objects
-#     rna.obs['kernel_bandwidth'] = rna_kernel_bandwidths
-#     atac.obs['kernel_bandwidth'] = atac_kernel_bandwidths
-#     rna_distances = pairwise_distances(rna_embedding)
-#     np.fill_diagonal(rna_distances, np.inf)
-#     closest_indices_rna = np.argmin(rna_distances, axis=1)
-#     closest_distances_rna = np.linalg.norm(rna_embedding - rna_embedding[closest_indices_rna], axis=1)
-#     rna_theta_within = np.exp(-np.maximum(np.linalg.norm(rna_embedding - rna_avg_embedding, axis=1)-closest_distances_rna,0)
-#                         /(rna_kernel_bandwidths - closest_distances_rna))
+    # Assign the observation-specific kernel bandwidths to the respective AnnData objects
+    rna.obs['kernel_bandwidth'] = rna_kernel_bandwidths
+    atac.obs['kernel_bandwidth'] = atac_kernel_bandwidths
+    rna_distances = pairwise_distances(rna_embedding)
+    np.fill_diagonal(rna_distances, np.inf)
+    closest_indices_rna = np.argmin(rna_distances, axis=1)
+    closest_distances_rna = np.linalg.norm(rna_embedding - rna_embedding[closest_indices_rna], axis=1)
+    rna_theta_within = np.exp(-np.maximum(np.linalg.norm(rna_embedding - rna_avg_embedding, axis=1)-closest_distances_rna,0)
+                        /(rna_kernel_bandwidths - closest_distances_rna))
 
-#     rna_theta_cross = np.exp(-np.maximum(np.linalg.norm(rna_embedding - rna_cross_modality_avg_embedding, axis=1)-closest_distances_rna,0)
-#                         /(rna_kernel_bandwidths -  closest_distances_rna))
-
-
-#     atac_distances = pairwise_distances(atac_embedding)
-#     np.fill_diagonal(atac_distances, np.inf)
-#     closest_indices_atac = np.argmin(atac_distances, axis=1)
-#     closest_distances_atac = np.linalg.norm(atac_embedding - atac_embedding[closest_indices_atac], axis=1)
-#     atac_theta_within = np.exp(-np.maximum(np.linalg.norm(atac_embedding - atac_avg_embedding, axis=1)-closest_distances_atac,0)
-#                         /(atac_kernel_bandwidths  - closest_distances_atac))
+    rna_theta_cross = np.exp(-np.maximum(np.linalg.norm(rna_embedding - rna_cross_modality_avg_embedding, axis=1)-closest_distances_rna,0)
+                        /(rna_kernel_bandwidths -  closest_distances_rna))
 
 
-#     atac_theta_cross = np.exp(-np.maximum(np.linalg.norm(atac_embedding - atac_cross_modality_avg_embedding, axis=1)-closest_distances_atac,0)
-#                         /(atac_kernel_bandwidths -  closest_distances_atac))
+    atac_distances = pairwise_distances(atac_embedding)
+    np.fill_diagonal(atac_distances, np.inf)
+    closest_indices_atac = np.argmin(atac_distances, axis=1)
+    closest_distances_atac = np.linalg.norm(atac_embedding - atac_embedding[closest_indices_atac], axis=1)
+    atac_theta_within = np.exp(-np.maximum(np.linalg.norm(atac_embedding - atac_avg_embedding, axis=1)-closest_distances_atac,0)
+                        /(atac_kernel_bandwidths  - closest_distances_atac))
 
-#     epsilon = 1e-4
 
-#     rna_ratio = rna_theta_within /(rna_theta_cross+epsilon)
-#     atac_ratio = atac_theta_within / (atac_theta_cross + epsilon)
+    atac_theta_cross = np.exp(-np.maximum(np.linalg.norm(atac_embedding - atac_cross_modality_avg_embedding, axis=1)-closest_distances_atac,0)
+                        /(atac_kernel_bandwidths -  closest_distances_atac))
 
-#     rna_weight = calculate_weight(rna_ratio, atac_ratio)
-#     atac_weight = 1- rna_weight
+    epsilon = 1e-4
 
-#     num_rna = len(rna_embedding)
-#     num_atac = len(atac_embedding)
+    rna_ratio = rna_theta_within /(rna_theta_cross+epsilon)
+    atac_ratio = atac_theta_within / (atac_theta_cross + epsilon)
 
-#     # Initialize the matrix with zeros
-#     wnn_mat = np.zeros((num_rna, num_atac))
-#     # Iterate over the indices i and j
-#     for i in range(num_rna):
-#         for j in range(num_atac):
-#             # Calculate theta_rna and theta_atac based on rna_embedding and atac_embedding
-#             theta_rna = np.exp(-np.maximum(np.linalg.norm(rna_embedding[i] -rna_embedding[j])-closest_distances_rna[i],0)
-#                         /(rna_kernel_bandwidths[i] - closest_distances_rna[i]))
-#             theta_atac = np.exp(-np.maximum(np.linalg.norm(atac_embedding[i] -atac_embedding[j])-closest_distances_atac[i],0)
-#                         /(atac_kernel_bandwidths[i] - closest_distances_atac[i]))
+    rna_weight = calculate_weight(rna_ratio, atac_ratio)
+    atac_weight = 1- rna_weight
+
+    num_rna = len(rna_embedding)
+    num_atac = len(atac_embedding)
+
+    # Initialize the matrix with zeros
+    wnn_mat = np.zeros((num_rna, num_atac))
+    # Iterate over the indices i and j
+    for i in range(num_rna):
+        for j in range(num_atac):
+            # Calculate theta_rna and theta_atac based on rna_embedding and atac_embedding
+            theta_rna = np.exp(-np.maximum(np.linalg.norm(rna_embedding[i] -rna_embedding[j])-closest_distances_rna[i],0)
+                        /(rna_kernel_bandwidths[i] - closest_distances_rna[i]))
+            theta_atac = np.exp(-np.maximum(np.linalg.norm(atac_embedding[i] -atac_embedding[j])-closest_distances_atac[i],0)
+                        /(atac_kernel_bandwidths[i] - closest_distances_atac[i]))
             
-#             # Calculate the entry (i, j) based on the given formula
-#             wnn_mat[i, j] = rna_weight[i] * theta_rna + atac_weight[i] * theta_atac
+            # Calculate the entry (i, j) based on the given formula
+            wnn_mat[i, j] = rna_weight[i] * theta_rna + atac_weight[i] * theta_atac
 
-#     wnn_mat = np.nan_to_num(wnn_mat, nan=1)
-#     rna.obsp['wnn'] = wnn_mat
+    wnn_mat = np.nan_to_num(wnn_mat, nan=1)
+    rna.obsp['wnn'] = wnn_mat
 def Cal_gene_peak_Net_new(rna, atac, range=2000, 
                           file = "/lustre/project/Stat/s1155077016/Spatial_multi-omics_data/P22/gencode.vM25.chr_patch_hapl_scaff.annotation.gtf.gz", verbose=True):
     var_by=rna.var_names
@@ -547,6 +547,7 @@ def Stats_Spatial_Net(adata):
     plt.xlabel('')
     plt.title('Number of Neighbors (Mean=%.2f)'%Mean_edge)
     ax.bar(plot_df.index, plot_df)
+    return Mean_edge
 
 def mclust_R(adata, num_cluster, modelNames='EEE', used_obsm='STAGATE', random_seed=2020):
     """\
@@ -588,18 +589,13 @@ def wnn_R(adata1, adata2, res=0.5, algo =  1, used_obsm='MultiGATE'):
 
     data2 = adata2.obsm[used_obsm]
 
-    #data3 = adata2.X
-    # row_names2 = adata2.obs.index
-    # avg_label = adata1.obs['louvain'].astype('int')
-    # avg_label =  rpy2.robjects.numpy2ri.numpy2rpy(avg_label)
+
 
     rna_matrix =  rpy2.robjects.numpy2ri.numpy2rpy(data1)#robjects.r['as.matrix'](rna_df)
     atac_matrix = rpy2.robjects.numpy2ri.numpy2rpy(data2)
     #pro_matrix = rpy2.robjects.numpy2ri.numpy2rpy(data3)
     barcodes = rpy2.robjects.pandas2ri.py2rpy(adata1.obs.index)
 
-    #pro_matrix = rpy2.robjects.numpy2ri.numpy2rpy(data3)
-    #pronames = rpy2.robjects.pandas2ri.py2rpy(adata2.var_names)
 
     ro.r.assign("rna_matrix", rna_matrix)
     ro.r.assign("atac_matrix", atac_matrix)
@@ -607,14 +603,10 @@ def wnn_R(adata1, adata2, res=0.5, algo =  1, used_obsm='MultiGATE'):
     ro.r.assign("res", res)
     ro.r.assign("algo", algo)
 
-    #ro.r.assign("pronames", pronames)
-    #ro.r.assign("pro_matrix", pro_matrix)
-    # ro.r.assign("avg_label", avg_label)
-
     ro.r(
     '''
-    colnames(rna_matrix) <- paste0("pca_", 1:30)
-    colnames(atac_matrix) <- paste0("lsi_", 1:30)
+    colnames(rna_matrix) <- paste0("pca_", seq_len(ncol(rna_matrix)))
+    colnames(atac_matrix) <- paste0("lsi_", seq_len(ncol(atac_matrix)))
     rownames(rna_matrix) <- barcodes
 
     #colnames(pro_matrix) <- pronames
@@ -627,20 +619,16 @@ def wnn_R(adata1, adata2, res=0.5, algo =  1, used_obsm='MultiGATE'):
     P22[["ATAC"]] <- atac_obj
     P22[["pca"]] = CreateDimReducObject(embeddings = rna_matrix, key = "pca_", assay = "RNA")
     P22[["lsi"]] = CreateDimReducObject(embeddings = atac_matrix, key = "lsi_", assay = "ATAC")
-    P22 <- FindMultiModalNeighbors(P22, reduction.list = list("pca", "lsi"), dims.list = list(1:30, 1:30))
+    P22 <- FindMultiModalNeighbors(
+      P22,
+      reduction.list = list("pca", "lsi"),
+      dims.list      = list(seq_len(ncol(rna_matrix)), seq_len(ncol(atac_matrix)))
+    )
     P22 <- RunUMAP(P22, nn.name = "weighted.nn", reduction.name = "wnn.umap", reduction.key = "wnnUMAP_")
     P22 <- FindClusters(P22, graph.name = "wsnn", algorithm = algo, resolution = res,verbose = FALSE)
     clusters = P22@meta.data$seurat_clusters 
     wwnumap = P22[["wnn.umap"]]
     umap = Embeddings(object = wwnumap)#[1:nrow(rna_matrix), 1:2]##wwnumap[1:nrow(rna_matrix), 1:2]#P22[["wnn.umap"]]  wwnumap[[1:nrow(rna_matrix), 1:2]] obj@reductions$umap
-    #VariableFeatures(Pro) = rownames(Pro@assays$RNA@counts)    
-    #Pro@active.ident = as.factor(clusters)
-    #heatmap = DoHeatmap(Pro, slot = "data", disp.max=1.5, size = 3) 
-    #ggsave("/lustre/project/Stat/s1155077016/Spatial_RNA_Protein/mouse_spleen/heatmap_wnn.png", heatmap)
-    #Pro@active.ident = as.factor(avg_label)
-    #heatmap = DoHeatmap(Pro, slot = "data", disp.max=1.5, size = 3) 
-    #ggsave("/lustre/project/Stat/s1155077016/Spatial_RNA_Protein/mouse_spleen/heatmap_avg.png", heatmap)
-    #saveRDS(Pro, file = "/lustre/project/Stat/s1155077016/Spatial_RNA_Protein/mouse_spleen/pro_seurat.rds")   
     '''
     )
     wnn_UMAP = ro.r('umap')
@@ -737,19 +725,3 @@ def wnn_protein(adata1, adata2, res=0.5, algo =  1, used_obsm='MultiGATE'):
     adata1.obsm['X_umap'] = wnn_UMAP
     adata2.obsm['X_umap'] = wnn_UMAP
     return adata1, adata2
-
-def mclust_R(adata, num_cluster, modelNames='EEE', used_obsm='MultiGATE_clip_all', random_seed=2020):
-    np.random.seed(random_seed)
-    import rpy2.robjects as robjects
-    robjects.r.library("mclust")
-    import rpy2.robjects.numpy2ri
-    rpy2.robjects.numpy2ri.activate()
-    r_random_seed = robjects.r['set.seed']
-    r_random_seed(random_seed)
-    rmclust = robjects.r['Mclust']   
-    res = rmclust(rpy2.robjects.numpy2ri.numpy2rpy(adata.obsm[used_obsm]), num_cluster, modelNames)
-    mclust_res = np.array(res[-2])
-    adata.obs['mclust'] = mclust_res
-    adata.obs['mclust'] = adata.obs['mclust'].astype('int')
-    adata.obs['mclust'] = adata.obs['mclust'].astype('category')
-    return adata
