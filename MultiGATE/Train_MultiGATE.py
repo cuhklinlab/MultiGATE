@@ -107,6 +107,7 @@ def train_MultiGATE(adata1, adata2, hidden_dims=[512, 30], bp_width=450, temp=1.
         dist = G_gp_df['Distance']
         weights = np.concatenate((((dist + bp_width) / bp_width) **
                                  (-0.75), ((dist + bp_width) / bp_width) ** (-0.75)), axis=0)
+        temp=-10
         G_gp = sp.coo_matrix((weights, (np.concatenate((G_gp_df['Gene'], G_gp_df['Peak']), axis=0), np.concatenate((G_gp_df['Peak'], G_gp_df['Gene']), axis=0))), shape=(adata_Vars1.n_vars+adata_Vars2.n_vars,
                                                                                                                                                                           adata_Vars1.n_vars+adata_Vars2.n_vars))
     elif type is 'ATAC_RNA':
