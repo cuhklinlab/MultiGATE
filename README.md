@@ -9,6 +9,10 @@ It integrates chromatin accessibility or protein information with gene expressio
 The model employs cross-modality attention at the first level to capture inter-modality relationships, and withinmodality attention at the second level to incorporate spatial information. 
 In addition to reconstruction loss, CLIP loss is employed to enhance embedding mapping. This comprehensive approach enables the aggregation of spatial information and feature expression, facilitating joint clustering for precise spatial analysis using both modalities.
 
+## Reproduce
+
+The `/Reproduce` directory contains scripts and resources to reproduce the main figures and results of MultiGATE, including spatial clustering results, trans-regulation analysis, long-range interaction detection, and protein-gene interaction findings. Please refer to the instructions and scripts in this directory to replicate the key analyses and visualizations presented in the paper.
+
 ## Usage && installation
 
 Please follow the [Tutorials](https://multigate.readthedocs.io/en/latest) for installation and Usage.

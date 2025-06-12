@@ -1,0 +1,97 @@
+Gene,pathway,pathwayname,Protein,Attentionscore,score
+Sh2b3,CD3pathway,T-cell receptor signaling pathway,CD3,0.19416584,0.19416584
+Chuk,CD3pathway,Downstream TCR signaling,CD3,0.16648783,0.16648783
+Akt1,CD3pathway,T-cell receptor signaling pathway,CD3,0.20101453,0.20101453
+Grap2,CD3pathway,Generation of second messenger molecules,CD3,0.44942108,0.44942108
+Creb1,CD3pathway,FCGR3A-mediated IL10 synthesis,CD3,0.45719215,0.45719215
+Pik3r1,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.9038525,0.9038525
+Nfkb1,CD3pathway,Downstream TCR signaling,CD3,0.50032014,0.50032014
+Plcg2,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.13834429,0.13834429
+Ighg1,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.17830043,0.17830043
+Hck,CD3pathway,The role of Nef in HIV-1 replication and disease pathogenesis,CD3,0.48997855,0.48997855
+Cblb,CD3pathway,T-cell receptor signaling pathway,CD3,0.72447526,0.72447526
+Grb2,CD3pathway,Cargo recognition for clathrin-mediated endocytosis,CD3,0.4178936,0.4178936
+Prkcq,CD3pathway,Downstream TCR signaling,CD3,0.35133877,0.35133877
+Fyn,CD3pathway,The role of Nef in HIV-1 replication and disease pathogenesis,CD3,0.68080837,0.68080837
+Pdpk1,CD3pathway,Downstream TCR signaling,CD3,0.14613192,0.14613192
+Zap70,CD3pathway,Translocation of ZAP-70 to Immunological synapse,CD3,0.90204924,0.90204924
+Card11,CD3pathway,Downstream TCR signaling,CD3,0.39271843,0.39271843
+Malt1,CD3pathway,Downstream TCR signaling,CD3,0.17597023,0.17597023
+Cd8b1,CD3pathway,The role of Nef in HIV-1 replication and disease pathogenesis,CD3,0.8957881,0.8957881
+Cd247,CD3pathway,Translocation of ZAP-70 to Immunological synapse,CD3,0.2830491,0.2830491
+Lat,CD3pathway,Generation of second messenger molecules,CD3,0.9588351,0.9588351
+Lck,CD3pathway,Translocation of ZAP-70 to Immunological synapse,CD3,0.918783,0.918783
+Fgr,CD3pathway,FCGR3A-mediated IL10 synthesis,CD3,0.62189144,0.62189144
+Cd3d,CD3pathway,Translocation of ZAP-70 to Immunological synapse,CD3,0.949495,0.949495
+Rela,CD3pathway,Downstream TCR signaling,CD3,0.62300277,0.62300277
+Itpr1,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.48833677,0.48833677
+Vav1,CD3pathway,T-cell receptor signaling pathway,CD3,0.26474693,0.26474693
+Ighg3,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.2012975,0.2012975
+Plcg1,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.9589421,0.9589421
+Cd3e,CD3pathway,Translocation of ZAP-70 to Immunological synapse,CD3,0.9928261,0.9928261
+Itpr2,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.8406248,0.8406248
+Cd8a,CD3pathway,T-cell receptor signaling pathway,CD3,0.90861654,0.90861654
+Cd4,CD3pathway,Translocation of ZAP-70 to Immunological synapse,CD3,0.62674946,0.62674946
+Map3k14,CD3pathway,T-cell receptor signaling pathway,CD3,0.14952213,0.14952213
+Lyn,CD3pathway,FCGR3A-mediated IL10 synthesis,CD3,0.26013443,0.26013443
+Lcp2,CD3pathway,Generation of second messenger molecules,CD3,0.041620024,0.041620024
+Itpr3,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.3758768,0.3758768
+Map4k1,CD3pathway,T-cell receptor signaling pathway,CD3,0.30799574,0.30799574
+Ikbkb,CD3pathway,Downstream TCR signaling,CD3,0.8601633,0.8601633
+Iglc1,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.12562642,0.12562642
+Iglc3,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.40939343,0.40939343
+Prkcd,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.72329557,0.72329557
+Iglc2,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.31181574,0.31181574
+Rel,CD3pathway,T-cell receptor signaling pathway,CD3,0.2668258,0.2668258
+Nfkbia,CD3pathway,Downstream TCR signaling,CD3,0.6285975,0.6285975
+Syk,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.52470595,0.52470595
+Ighg2c,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.05945038,0.05945038
+Igkc,CD3pathway,Role of phospholipids in phagocytosis,CD3,0.0,0.0
+Ccl3,MacrophagePathway,Toll-like receptor signaling pathway,CD3,0.21539609,0.21539609
+Ccr4,MacrophagePathway,Cytokine-cytokine receptor interaction,CD3,0.07330531,0.07330531
+Il1rl1,MacrophagePathway,Cytokine-cytokine receptor interaction,CD3,0.013681464,0.013681464
+Mapk13,MacrophagePathway,Toll-like receptor signaling pathway,CD3,0.08812344,0.08812344
+Map2k6,MacrophagePathway,Toll-like receptor signaling pathway,CD3,1.0,1.0
+Bmp3,MacrophagePathway,Cytokine-cytokine receptor interaction,CD3,0.22017762,0.22017762
+Il1rl2,MacrophagePathway,Cytokine-cytokine receptor interaction,CD3,0.035158984,0.035158984
+Ngf,MacrophagePathway,Cytokine-cytokine receptor interaction,CD3,0.062669344,0.062669344
+Casp12,MacrophagePathway,NOD-like receptor signaling pathway,CD3,0.068510406,0.068510406
+Bmp6,MacrophagePathway,Cytokine-cytokine receptor interaction,CD3,0.3464772,0.3464772
+Tab3,MacrophagePathway,Toll-like receptor signaling pathway,CD3,0.5448847,0.5448847
+Il1rap,MacrophagePathway,Cytokine-cytokine receptor interaction,CD3,0.5685183,0.5685183
+Tirap,MacrophagePathway,Toll-like receptor signaling related to MyD88,CD3,0.21898754,0.21898754
+Bmp4,MacrophagePathway,Cytokine-cytokine receptor interaction,CD3,0.20938955,0.20938955
+Casp1,MacrophagePathway,NOD-like receptor signaling pathway,CD3,0.3809518,0.3809518
+S100a1,MacrophagePathway,ER-Phagosome pathway,CD3,0.5111854,0.5111854
+C4a,BcellPathway,Extrafollicular and follicular B cell activation by SARS-CoV-2,CD3,0.03387789,0.03387789
+Camk2a,BcellPathway,B cell receptor signaling pathway,CD3,0.025130888,0.025130888
+Prdm1,BcellPathway,Extrafollicular and follicular B cell activation by SARS-CoV-2,CD3,0.21551019,0.21551019
+Trpc1,BcellPathway,Antigen activates B Cell Receptor (BCR) leading to generation of second messengers,CD3,0.059470594,0.059470594
+Map2k6,BcellPathway,B cell receptor signaling pathway,CD3,1.0,1.0
+Aicda,BcellPathway,Extrafollicular and follicular B cell activation by SARS-CoV-2,CD3,0.6095962,0.6095962
+Fcrl5,BcellPathway,Extrafollicular and follicular B cell activation by SARS-CoV-2,CD3,0.23740421,0.23740421
+Pip5k1b,BcellPathway,B cell receptor signaling pathway,CD3,0.29515818,0.29515818
+Inppl1,BcellPathway,B cell receptor signaling pathway,CD3,0.5516219,0.5516219
+Ezh2,BcellPathway,FBXL10 enhancement of MAP/ERK signaling in diffuse large B-cell lymphoma,CD3,0.23125297,0.23125297
+Cd82,BcellPathway,Extrafollicular and follicular B cell activation by SARS-CoV-2,CD3,0.31294325,0.31294325
+Sell,BcellPathway,Extrafollicular and follicular B cell activation by SARS-CoV-2,CD3,0.944329,0.944329
+Ms4a1,BcellPathway,Extrafollicular and follicular B cell activation by SARS-CoV-2,CD3,0.40123728,0.40123728
+Itgb2,BcellPathway,Extrafollicular and follicular B cell activation by SARS-CoV-2,CD3,0.691814,0.691814
+Tmsb10,BcellPathway,Extrafollicular and follicular B cell activation by SARS-CoV-2,CD3,0.6060594,0.6060594
+Braf,BcellPathway,B cell receptor signaling pathway,CD3,0.1766349,0.1766349
+C730036E19Rik,randomchose,Randomchoose,CD3,0.07072419,0.07072419
+Lrmda,randomchose,Randomchoose,CD3,0.034622632,0.034622632
+Cacng4,randomchose,Randomchoose,CD3,0.055608626,0.055608626
+Klhl11,randomchose,Randomchoose,CD3,0.026921155,0.026921155
+Gata5,randomchose,Randomchoose,CD3,0.29502678,0.29502678
+Nrtn,randomchose,Randomchoose,CD3,0.0074403062,0.0074403062
+Kcnk7,randomchose,Randomchoose,CD3,0.3488341,0.3488341
+2900009J06Rik,randomchose,Randomchoose,CD3,0.010534155,0.010534155
+Gm15991,randomchose,Randomchoose,CD3,0.016683444,0.016683444
+Rasgef1c,randomchose,Randomchoose,CD3,0.047907308,0.047907308
+Wnk4,randomchose,Randomchoose,CD3,0.062144715,0.062144715
+Pigz,randomchose,Randomchoose,CD3,0.2276512,0.2276512
+Mei4,randomchose,Randomchoose,CD3,0.041250855,0.041250855
+Slc7a3,randomchose,Randomchoose,CD3,0.02988283,0.02988283
+Gm42918,randomchose,Randomchoose,CD3,0.33905503,0.33905503
+Gdf9,randomchose,Randomchoose,CD3,0.70987487,0.70987487
