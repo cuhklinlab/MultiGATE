@@ -48,24 +48,6 @@ MultiGATE initially restricts candidate peak-gene edges to within 150 kb through
 7. **Visualization**: Publication-quality plots with statistical annotations
 8. **Export**: Save processed datasets and visualizations
 
-## Technical Requirements
-
-- Python 3.8+ with scientific computing libraries (scanpy, pandas, numpy, scipy, matplotlib, seaborn)
-- GPU recommended for large matrix operations
-- 16GB+ RAM for sparse matrix operations
-
-## Statistical Methods
-
-- **Distance bins**: 8 categories from 0-150 kb to >1.25 Mb
-- **Statistical test**: Mann-Whitney U test with Cohen's d effect size
-- **Tissue classification**: Brain-specific, other tissues, unclassified (based on HiChIP data)
-
-## Key Results
-
-- Brain-specific HiChIP loops show significantly higher attention scores across all distance categories (P<1×10⁻³)
-- Long-range interactions demonstrate stronger tissue specificity than short-range interactions
-- Identified interactions are supported by independent eQTL and GWAS evidence
-- Target genes are enriched for neurological functions
 
 ## Reproducibility
 
