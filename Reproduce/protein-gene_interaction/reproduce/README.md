@@ -1,6 +1,6 @@
 # Gene-Protein Interaction Analysis Pipeline
 
-Analysis pipeline for gene-protein interactions using attention mechanisms from spatial multi-omics data.
+Analysis pipeline for gene-protein interactions using MultiGATE's cross-modality attention scores from spatial multi-omics data.
 
 ## Scripts
 
