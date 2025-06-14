@@ -1,6 +1,5 @@
 # MultiGATE
 
-> MultiGATE is a novel method that utilizes a two-level graph attention auto-encoder to integrate multi-modality and spatial information effectively.
 
 ![Overview](https://github.com/aqlkzf/typoraimg/raw/main//imgmac/MultiGATE_framework.png)
 
