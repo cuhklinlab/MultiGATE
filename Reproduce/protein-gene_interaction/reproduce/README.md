@@ -31,7 +31,7 @@ python attention_analyzer.py
 ### Input Files
 **Small Input Files (included in repository):**
 - `input_*.csv` - Gene pathway data and attention scores
-- `*.npz` - Gene-peak attention matrices
+- `*.npz` - Gene-protein attention matrices
 
 **Large Data Files (download required):**
 - `rna_data0320.h5ad` (142.8 MB) - RNA single-cell data
