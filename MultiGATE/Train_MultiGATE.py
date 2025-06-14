@@ -139,7 +139,7 @@ def train_MultiGATE(adata1, adata2, hidden_dims=[512, 30], bp_width=450, temp=1.
         'weight_decay_loss': trainer.weight_decay_loss_list,
     })
 
-    loss_df.to_csv('losses.csv', index=False)
+    # loss_df.to_csv('losses.csv', index=False)
     embeddings_RNA, embeddings_ATAC, attentions1, attentions2, attentions_gp, loss, ReX_RNA, ReX_ATAC = trainer.infer(G_tf, G_tf,
                                                                                                                       G_gp_tf, X1, X2)
 
