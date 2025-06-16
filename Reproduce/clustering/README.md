@@ -17,22 +17,6 @@ The following 7 datasets are included in this reproduction suite:
 6. **Breast Cancer Dataset** (Visium-CytAssist RNA–protein) - `breast_cancer_10xdata/`
 7. **Simulation Dataset** (breast cancer-patterned spatial ATAC + RNA) - `Simulated_data/`
 
-## Platforms and Technologies
-
-The datasets cover five different spatial multi-omics platforms:
-- **Spatial ATAC–RNA**: Human hippocampus, P22 mouse brain, simulation datasets
-- **Slide-tags**: Metastatic melanoma dataset
-- **Visium-CytAssist RNA–protein**: Breast cancer dataset
-- **SMA**: Spatial RNA + metabolomics dataset
-- **SPOTS**: Murine spleen dataset
-
-## Molecular Combinations
-
-Different molecular combinations are represented:
-- Spatial ATAC + RNA
-- Spatial RNA + protein/ADT
-- Spatial RNA + metabolite
-
 ## Directory Structure
 
 ```
