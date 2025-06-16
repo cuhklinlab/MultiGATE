@@ -1,0 +1,22 @@
+# Data Download Instructions
+
+Due to file size limitations (>100MB), the input data files are hosted on Google Drive and must be downloaded manually.
+
+## Required Files
+- `SPM.h5ad`  - Spatial metabolic data
+- `SPT.h5ad`  - Spatial transcriptomic data
+
+## Download Instructions
+1. Access the Google Drive folder: https://drive.google.com/drive/folders/113Si1InBZl64LBvPSwkoMgFELIwljfVA?usp=drive_link
+2. Download both `SPM.h5ad` and `SPT.h5ad` files
+3. Place the downloaded files in this directory (`spatial_metabolic_RNA_data/InputData/`)
+
+## File Structure After Download
+```
+spatial_metabolic_RNA_data/InputData/
+├── SPM.h5ad
+├── SPT.h5ad
+└── downloadData.txt
+```
+
+**Note**: Ensure both files are downloaded completely before proceeding with data analysis.

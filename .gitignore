@@ -166,3 +166,9 @@ Reproduce/clustering/P22mouseData/P22Mousebrain_Results/*.h5ad
 Reproduce/protein-gene_interaction/reproduce/*.h5ad
 Reproduce/trans-regulation/TF_validation/tf_binding_all.pkl
 Reproduce/trans-regulation/TF_validation.zip
+
+# Large files over 100MB in clustering directory
+Reproduce/clustering/P22mouseData/P22Mousebrain_Results/P22mouse_adata2.h5ad
+Reproduce/clustering/P22mouseData/P22Mousebrain_Results/P22mouse_adata1.h5ad
+Reproduce/clustering/spatial_metabolic_RNA_data/InputData/SPT.h5ad
+Reproduce/clustering/breast_cancer_10xdata/Inputdata/adata_rna.h5ad

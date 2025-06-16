@@ -1,0 +1,12 @@
+# Data Download Instructions
+
+Due to file size limitations (>100MB), the input data files are hosted on Google Drive and must be downloaded manually.
+
+## Required Files
+- `adata_protein.h5ad` 
+- `adata_rna.h5ad` 
+
+## Download Steps
+1. Access the data repository: https://drive.google.com/drive/folders/1iNaVOrj_njHULha-EnD0Nun_sNUjAlX8?usp=drive_link
+2. Download both `.h5ad` files to this directory (`breast_cancer_10xdata/Inputdata/`)
+3. Ensure the files are placed directly in the current folder without subdirectories
