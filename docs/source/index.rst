@@ -34,5 +34,6 @@ MultiGATE Tutorials
    notebooks/human
    notebooks/spleen
    notebooks/p22
+   notebooks/analysisAttentiontestused0709
 
    
