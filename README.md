@@ -15,4 +15,4 @@ Please follow the [Tutorials](https://multigate.readthedocs.io/en/latest) for in
 
 ## Citation
 Miao, Jishuai, Jinzhao Li, Jingxue Xin, Jiajuan Tu, Muyang Ge, Ji Qi, Xiaocheng Zhou, Ying Zhu, Can Yang, and Zhixiang Lin. "MultiGATE: integrative analysis and regulatory inference in spatial multi-omics data via graph representation learning." Nature Communications 16, no. 1 (2025): 9403.
-[Publication link](https://www.nature.com/articles/s41467-025-63418-x)
+https://www.nature.com/articles/s41467-025-63418-x
